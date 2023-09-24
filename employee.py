@@ -38,7 +38,7 @@ class Employee:
                 return self.name + " works on a monthly salary of " + str(self.salary) + " and recieves a bonus commision of " + str(self.bonus) + ". Their total pay is " + str(self.salary)
             
             else:
-                return self.name + " works on a monthly salary of " + str(self.salary) + ". Their total pay is " + str(self.salary) 
+                return self.name + " works on a monthly salary of " + str(self.salary) + ".\n" + "Their total pay is " + str(self.salary)  
 
         elif self.salaryType == "contract":
             if self.bonusType == "contractCommision":
