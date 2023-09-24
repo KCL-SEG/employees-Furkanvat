@@ -13,7 +13,7 @@ class Employee:
         self.hours = hours
         self.per_hour = per_hour
 
-    def calculate_pay(self):
+    def get_pay(self):
         pay = 0
 
         if self.salary_type == self.MONTHLY:
@@ -29,7 +29,7 @@ class Employee:
         return pay
 
     def __str__(self):
-        pay = self.calculate_pay()
+        pay = self.get_pay()
         pay_info = f"{self.name} works on a "
 
         if self.salary_type == self.MONTHLY:
