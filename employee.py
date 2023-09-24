@@ -1,71 +1,54 @@
-"""Employee pay calculator."""
-"""ENTER YOUR SOLUTION HERE!"""
-
 class Employee:
+    MONTHLY = "monthly"
+    CONTRACT = "contract"
 
-    def __init__(self, name, salaryType, bonusType, salary, contract, contractRate,bonus, hours, perHour):
+    def __init__(self, name, salary_type, bonus_type=None, salary=None, contract=None, contract_rate=None, bonus=None, hours=None, per_hour=None):
         self.name = name
-        self.salaryType = salaryType
-        self.bonusType = bonusType
+        self.salary_type = salary_type
+        self.bonus_type = bonus_type
         self.salary = salary
         self.contract = contract
-        self.contractRate = contractRate
+        self.contract_rate = contract_rate
         self.bonus = bonus
         self.hours = hours
-        self.perHour = perHour      
+        self.per_hour = per_hour
 
-    def get_pay(self):
-        if self.salaryType == "monthly":
-            if self.bonusType == "contractCommision":
-                self.salary += self.contract * self.contractRate
-            elif self.bonusType == "bonusCommision":
-                self.salary += self.bonus
+    def calculate_pay(self):
+        pay = 0
 
-        elif self.salaryType == "contract":
-            if self.bonusType == "contractCommision":
-                self.salary += self.contract * self.contractRate
-            elif self.bonusType == "bonusCommision":
-                self.salary += self.bonus
-        
-        return self.salary
+        if self.salary_type == self.MONTHLY:
+            pay += self.salary
+        elif self.salary_type == self.CONTRACT:
+            pay += self.hours * self.per_hour
+
+        if self.bonus_type == "contractCommision":
+            pay += self.contract * self.contract_rate
+        elif self.bonus_type == "bonusCommision":
+            pay += self.bonus
+
+        return pay
 
     def __str__(self):
-        if self.salaryType == "monthly":
-            if self.bonusType == "contractCommision":
-                return self.name + " works on a monthly salary of " + str(self.salary) + " and recieves a commision for " + str(self.contract) + " contract(s) at " + str(self.contractRate) + "/contract" + ". Their total pay is " + str(self.salary)
-            
-            elif self.bonusType == "bonusCommision":
-                return self.name + " works on a monthly salary of " + str(self.salary) + " and recieves a bonus commision of " + str(self.bonus) + ". Their total pay is " + str(self.salary)
-            
-            else:
-                return self.name + " works on a monthly salary of " + str(self.salary) +  ". Their total pay is " + str(self.salary) 
+        pay = self.calculate_pay()
+        pay_info = f"{self.name} works on a "
 
-        elif self.salaryType == "contract":
-            if self.bonusType == "contractCommision":
-                return self.name + " works on a contract of " + str(self.hours) + " hours at " + str(self.perHour) + "/hour" + " and recieves a commision for " + str(self.contract) + " contract(s) at " + str(self.contractRate) + "/contract" + ". Their total pay is " + str(self.salary)
+        if self.salary_type == self.MONTHLY:
+            pay_info += f"monthly salary of {self.salary}"
+        elif self.salary_type == self.CONTRACT:
+            pay_info += f"contract of {self.hours} hours at {self.per_hour}/hour"
 
-            elif self.bonusType == "bonusCommision":
-                return self.name + " works on a contract of " + str(self.hours) + " hours at " + str(self.perHour) + "/hour" + " and recieves a bonus commision of " + str(self.bonus) + ". Their total pay is " + str(self.salary) 
+        if self.bonus_type == "contractCommision":
+            pay_info += f" and receives a commission for {self.contract} contract(s) at {self.contract_rate}/contract"
+        elif self.bonus_type == "bonusCommision":
+            pay_info += f" and receives a bonus commission of {self.bonus}"
 
-            else:
-                return self.name + " works on a contract of " + str(self.hours) + " hours at " + str(self.perHour) + "/hour" + ". Their total pay is " + str(self.salary) 
+        pay_info += f". Their total pay is {pay}."
+        return pay_info
 
-# Billie works on a monthly salary of 4000.  Their total pay is 4000.
-billie = Employee('Billie', "monthly", None, 4000, None , None, None, None, None )
-
-# Charlie works on a contract of 100 hours at 25/hour.  Their total pay is 2500.
-charlie = Employee('Charlie', "contract", None, (100 * 25), None, None, None, 100, 25)
-
-# Renee works on a monthly salary of 3000 and receives a commission for 4 contract(s) at 200/contract.  Their total pay is 3800.
-renee = Employee('Renee', "monthly", "contractCommision", 3000, 4, 200, None, None, None)
-
-# Jan works on a contract of 150 hours at 25/hour and receives a commission for 3 contract(s) at 220/contract.  Their total pay is 4410.
-jan = Employee('Jan', "contract", "contractCommision", (150 * 25), 3, 220, None, 150, 25)
-
-# Robbie works on a monthly salary of 2000 and receives a bonus commission of 1500.  Their total pay is 3500.
-robbie = Employee('Robbie', "monthly", "bonusCommision", 2000, None, None, 1500, None, None)
-
-# Ariel works on a contract of 120 hours at 30/hour and receives a bonus commission of 600.  Their total pay is 4200.
-ariel = Employee('Ariel', "contract", "bonusCommision", (120 * 30), None, None, 600, 120, 30)
-
-
+# The employee objects remain the same
+billie = Employee('Billie', Employee.MONTHLY, None, 4000)
+charlie = Employee('Charlie', Employee.CONTRACT, None, None, None, None, None, 100, 25)
+renee = Employee('Renee', Employee.MONTHLY, "contractCommision", 3000, 4, 200)
+jan = Employee('Jan', Employee.CONTRACT, "contractCommision", None, 3, 220, None, 150, 25)
+robbie = Employee('Robbie', Employee.MONTHLY, "bonusCommision", 2000, None, None, 1500)
+ariel = Employee('Ariel', Employee.CONTRACT, "bonusCommision", None, None, None, 600, 120, 30)
