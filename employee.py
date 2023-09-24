@@ -11,11 +11,7 @@ class Employee:
         self.contract = contract
         self.contractRate = contractRate
         self.bonus = bonus
-    
-    def get_bonus(self):
-        return self.contract * self.contractRate
-         
-
+        
     def get_pay(self):
         if self.salaryType == "monthly":
             if self.bonusType == "contractCommision":
